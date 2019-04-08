@@ -9,9 +9,9 @@ class Svfzip
     private $forge = null;
     private $token = null;
 
-    private function __construct()
+    private function __construct($url = null)
     {
-        $this->forge = new Api($url = null);
+        $this->forge = new Api($url);
         $this->token = Auth::getInstance()->Token();
     }
 
