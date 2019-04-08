@@ -8,14 +8,16 @@ use GuzzleHttp\Client;
 class Upload
 {
     private $url;
+    private $token = null;
 
     public function __construct()
     {
         $this->url = (new Api())->url;
+        $this->token = Auth::getInstance()->Token();
     }
 
     //上传文件
-    public function iCloud($apiStr, $token, $filename)
+    public function iCloud($apiStr, $filename)
     {
         $client = new Client();
         $url = $this->url . $apiStr;
@@ -23,7 +25,7 @@ class Upload
             $opts = [
                 'body' => new \SplFileObject($filename),
                 'headers' => [
-                    'Authorization' => 'Bearer ' . $token,
+                    'Authorization' => 'Bearer ' . $this->token,
                     'verify' => false,
                     'Content-Type' => 'application/binary'
                 ],
