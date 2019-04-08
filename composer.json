@@ -1,0 +1,27 @@
+{
+    "name": "hzy9738/forge-sdk",
+    "description": "forge-sdk",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hzy9738",
+            "email": "hzy9738@126.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php" : ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "HelloWorld\\" : "src/"
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
