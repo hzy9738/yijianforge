@@ -1,10 +1,20 @@
 <?php
+
 namespace Forge;
 
 class Compare
 {
+    private $forge = null;
+    private $token = null;
+
+    private function __construct()
+    {
+        $this->forge = new Api();
+        $this->token = Auth::getInstance()->Token();
+    }
+
     //模型对比
-    public static function Model($newobjectName, $oldobjectName,$outobjectname)
+    public function Model($newobjectName, $oldobjectName, $outobjectname)
     {
         $data = [
             "input" => [
@@ -24,15 +34,15 @@ class Compare
                 "objectName" => $outobjectname
             ]
         ];
-        return Api::PostJson($data, 'job/v1/author-differ', Auth::Token());
+        return $this->forge->PostJson($data, 'job/v1/author-differ', $this->token);
     }
 
 
     //转化进度
-    public static function progress($urn)
+    public function progress($urn)
     {
 
-        return Api::Get("job/v1/author-differ/".$urn,Auth::Token());
+        return $this->forge->Get("job/v1/author-differ/" . $urn, $this->token);
 
     }
 }

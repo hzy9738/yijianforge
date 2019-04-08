@@ -1,10 +1,20 @@
 <?php
+
 namespace Forge;
 
 class Merge
 {
+    private $forge = null;
+    private $token = null;
+
+    private function __construct()
+    {
+        $this->forge = new Api();
+        $this->token = Auth::getInstance()->Token();
+    }
+
     //模型合并
-    public static function Model($input,$outobjectname)
+    public function Model($input, $outobjectname)
     {
         $data = [
             "input" => $input,
@@ -14,13 +24,13 @@ class Merge
             ]
         ];
 
-        return Api::PostJson($data, 'job/v1/author-merger', Auth::Token());
+        return $this->forge->PostJson($data, 'job/v1/author-merger', $this->token);
     }
 
 
     //合并进度
-    public static function progress($urn)
+    public function progress($urn)
     {
-        return Api::Get("job/v1/author-merger/" . $urn, Auth::Token());
+        return $this->forge->Get("job/v1/author-merger/" . $urn, $this->token);
     }
 }

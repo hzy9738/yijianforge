@@ -7,14 +7,18 @@ use GuzzleHttp\Client;
 
 class Upload
 {
-    private static $url = "http://192.168.1.214:8000/";
+    private $url;
 
+    public function __construct()
+    {
+        $this->url = (new Api())->url;
+    }
 
     //上传文件
-    public static function iCloud($apiStr, $token, $filename)
+    public function iCloud($apiStr, $token, $filename)
     {
         $client = new Client();
-        $url = self::$url . $apiStr;
+        $url = $this->url . $apiStr;
         try {
             $opts = [
                 'body' => new \SplFileObject($filename),

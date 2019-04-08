@@ -1,14 +1,22 @@
 <?php
+
 namespace Forge;
 
 
 class Svfzip
 {
-    private static $url = "http://192.168.1.214:8000/";
 
+    private $forge = null;
+    private $token = null;
+
+    private function __construct()
+    {
+        $this->forge = new Api();
+        $this->token = Auth::getInstance()->Token();
+    }
 
     //转化成.svfzip
-    public static function iCloud($urn, $filename)
+    public function iCloud($urn, $filename)
     {
         $data = [
             "input" => [
@@ -27,11 +35,11 @@ class Svfzip
                 ]
             ]
         ];
-        return Api::PostJson($data, 'modelderivative/v2/designdata/job', Auth::Token());
+        return (new Api())->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
     }
 
     //模型转化成.svfzip
-    public static function Model($urn, $filename)
+    public function Model($urn, $filename)
     {
         $data = [
             "input" => [
@@ -43,7 +51,7 @@ class Svfzip
                 "formats" => [
                     [
                         "type" => "svf",
-                        "features" => ["ExcludeTexture","ExportGrids","ExportRooms","GenerateModelsDb","UseViewOverrideGraphic"],
+                        "features" => ["ExcludeTexture", "ExportGrids", "ExportRooms", "GenerateModelsDb", "UseViewOverrideGraphic"],
                         "views" => [
 
                         ]
@@ -51,11 +59,11 @@ class Svfzip
                 ]
             ]
         ];
-        return Api::PostJson($data, 'modelderivative/v2/designdata/job', Auth::Token());
+        return $this->forge($data, 'modelderivative/v2/designdata/job', $this->token);
     }
 
     //图纸转化成.svfzip
-    public static function Draw($urn, $filename)
+    public function Draw($urn, $filename)
     {
         $data = [
             "input" => [
@@ -76,15 +84,15 @@ class Svfzip
             ]
         ];
 
-        return Api::PostJson($data, 'modelderivative/v2/designdata/job', Auth::Token());
+        return (new Api())->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
 
     }
 
     //转化进度
-    public static function progress($urn)
+    public function progress($urn)
     {
 
-        return Api::Get("modelderivative/v2/designdata/" . base64_encode($urn) . "/manifest", Auth::Token());
+        return $this->forge->Get("modelderivative/v2/designdata/" . base64_encode($urn) . "/manifest", $this->token);
 
     }
 

@@ -8,7 +8,7 @@ class Auth
 
     private $token;
 
-    private function __construct()
+    public function __construct()
     {
 
         $data = [
@@ -18,7 +18,7 @@ class Auth
             "scope" => "data:white",
         ];
 
-        $this->token = Api::Post($data, "/authentication/v1/authenticate");
+        $this->token = (new Api())->Post($data, "/authentication/v1/authenticate");
     }
 
     private function __clone()

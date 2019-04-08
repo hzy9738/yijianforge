@@ -1,4 +1,5 @@
 <?php
+
 namespace Forge;
 
 
@@ -6,20 +7,25 @@ use GuzzleHttp\Client;
 
 class Api
 {
-    private static $url = "http://192.168.1.214:8000/";
+    public $url;
 
-    public static function Post($body, $apiStr, $token = null)
+    public function __construct()
+    {
+        $this->url = "http://192.168.1.214:8000/";
+    }
+
+    public function Post($body, $apiStr, $token = null)
     {
         $client = new \GuzzleHttp\Client();
         if (is_null($token)) {
-            $res = $client->request('POST', self::$url . $apiStr,
+            $res = $client->request('POST', $this->url . $apiStr,
                 [
                     'form_params' => $body,
                     'verify' => false,
                 ]
             );
         } else {
-            $res = $client->request('POST', self::$url . $apiStr,
+            $res = $client->request('POST', $this->url . $apiStr,
                 [
                     'form_params' => $body,
                     'verify' => false,
@@ -38,17 +44,17 @@ class Api
 
 
     //
-    public static function PostJson($body, $apiStr, $token = null)
+    public function PostJson($body, $apiStr, $token = null)
     {
         $client = new \GuzzleHttp\Client();
         if (is_null($token)) {
-            $res = $client->request('POST', self::$url . $apiStr,
+            $res = $client->request('POST', $this->url . $apiStr,
                 [
                     'form_params' => $body,
                 ]
             );
         } else {
-            $res = $client->request('POST', self::$url . $apiStr,
+            $res = $client->request('POST', $this->url . $apiStr,
                 [
                     'json' => $body,
                     'headers' => [
@@ -65,10 +71,10 @@ class Api
     }
 
 
-    public static function Get($apiStr, $token = null, $body = [])
+    public  function Get($apiStr, $token = null, $body = [])
     {
         $client = new \GuzzleHttp\Client();
-        $res = $client->request('GET', self::$url . $apiStr,
+        $res = $client->request('GET', $this->url . $apiStr,
             [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $token,
@@ -85,10 +91,10 @@ class Api
 
 
     //上传文件
-    public static function Upload($apiStr, $token, $filename)
+    public function Upload($apiStr, $token, $filename)
     {
         $client = new \GuzzleHttp\Client();
-        $url = self::$url . $apiStr;
+        $url = $this->url . $apiStr;
         $opts = [
             // auth
             'body' => fopen($filename, "r"),
