@@ -10,7 +10,6 @@ class Auth
 
     public function __construct($url = null)
     {
-
         $data = [
             "client_id" => "1u1o7f0vf5nsvcAQ20AribYYkcqciiOH",
             "client_secret" => "LGqolbiQSQnas3j4",

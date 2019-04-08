@@ -12,8 +12,8 @@ class Api
 
     public function __construct($url = null)
     {
-        if (is_null($url)) {
-            return "url不能为空";
+        if(empty($url)){
+            throw new \Exception("URL不能为空", 500);
         }
         $this->url = $url;
         $this->token = Auth::getInstance()->Token();

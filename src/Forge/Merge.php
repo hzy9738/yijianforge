@@ -9,6 +9,9 @@ class Merge
 
     private function __construct($url = null)
     {
+        if(empty($url)){
+            throw new \Exception("URL不能为空", 500);
+        }
         $this->forge = new Api($url);
         $this->token = Auth::getInstance()->Token();
     }
