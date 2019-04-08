@@ -4,12 +4,15 @@ namespace Forge;
 
 class Auth
 {
-    static private $instance;
+    private static $instance;
 
     private $token;
 
     public function __construct($url = null)
     {
+        if(empty($url)){
+            throw new \Exception("URL不能为空", 500);
+        }
         $data = [
             "client_id" => "1u1o7f0vf5nsvcAQ20AribYYkcqciiOH",
             "client_secret" => "LGqolbiQSQnas3j4",
@@ -17,7 +20,17 @@ class Auth
             "scope" => "data:white",
         ];
 
-        $this->token = (new Api($url))->Post($data, "/authentication/v1/authenticate");
+        $client = new \GuzzleHttp\Client();
+
+        $res = $client->request('POST', $url . "/authentication/v1/authenticate",
+            [
+                'form_params' => $data,
+                'verify' => false,
+            ]
+        );
+
+        $data = $res->getBody()->getContents();
+        $this->token = json_decode($data);
     }
 
     private function __clone()
