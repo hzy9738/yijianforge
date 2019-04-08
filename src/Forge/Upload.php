@@ -10,9 +10,12 @@ class Upload
     private $url;
     private $token = null;
 
-    public function __construct()
+    public function __construct($url = null)
     {
-        $this->url = (new Api())->url;
+        if (is_null($url)) {
+            return "url不能为空";
+        }
+        $this->url = $url;
         $this->token = Auth::getInstance()->Token();
     }
 

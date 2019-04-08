@@ -10,9 +10,12 @@ class Api
     public $url;
     private $token = null;
 
-    public function __construct()
+    public function __construct($url = null)
     {
-        $this->url = "http://192.168.1.214:8000/";
+        if (is_null($url)) {
+            return "url不能为空";
+        }
+        $this->url = $url;
         $this->token = Auth::getInstance()->Token();
     }
 

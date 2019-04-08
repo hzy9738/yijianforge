@@ -18,7 +18,7 @@ class Auth
             "scope" => "data:white",
         ];
 
-        $this->token = (new Api())->Post($data, "/authentication/v1/authenticate");
+        $this->token = (new Api($url = null))->Post($data, "/authentication/v1/authenticate");
     }
 
     private function __clone()

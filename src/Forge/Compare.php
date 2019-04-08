@@ -9,7 +9,7 @@ class Compare
 
     private function __construct()
     {
-        $this->forge = new Api();
+        $this->forge = new Api($url = null);
         $this->token = Auth::getInstance()->Token();
     }
 

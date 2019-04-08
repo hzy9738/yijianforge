@@ -11,7 +11,7 @@ class Svfzip
 
     private function __construct()
     {
-        $this->forge = new Api();
+        $this->forge = new Api($url = null);
         $this->token = Auth::getInstance()->Token();
     }
 
@@ -35,7 +35,7 @@ class Svfzip
                 ]
             ]
         ];
-        return (new Api())->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
+        return $this->forge->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
     }
 
     //模型转化成.svfzip
@@ -59,7 +59,7 @@ class Svfzip
                 ]
             ]
         ];
-        return $this->forge($data, 'modelderivative/v2/designdata/job', $this->token);
+        return $this->forge->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
     }
 
     //图纸转化成.svfzip
@@ -84,7 +84,7 @@ class Svfzip
             ]
         ];
 
-        return (new Api())->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
+        return $this->forge->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
 
     }
 
