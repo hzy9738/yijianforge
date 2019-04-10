@@ -10,18 +10,26 @@ class Upload
     private $url;
     private $token = null;
 
-    public function __construct($url = null)
+    public function __construct($url = "")
     {
-        if ($url === "" && empty($url)) {
+        if ($url === "") {
             throw new \Exception("URL不能为空", 500);
         }
         $this->url = $url;
-        $this->token = Auth::getInstance()->Token();
+        $this->token = (new Auth($url))->Token();
     }
 
-    //上传文件
-    public function iCloud($apiStr, $filename)
+    /**
+     * 上传文件
+     * @param $bucket   仓库名
+     * @param $objectkey objectkey
+     * @param $filename 文件路径
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function iCloud($bucket, $objectkey, $filename)
     {
+        $apiStr = "/oss/v2/buckets/{$bucket}/objects/{$objectkey}";
         $client = new Client();
         $url = $this->url . $apiStr;
         try {

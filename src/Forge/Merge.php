@@ -4,16 +4,18 @@ namespace Forge;
 
 class Merge
 {
-    private $forge = null;
     private $token = null;
+    private $client = null;
+    private $url = null;
 
-    private function __construct($url = null)
+    public function __construct($url = "")
     {
-        if ($url === "" && empty($url)) {
+        if ($url === "") {
             throw new \Exception("URL不能为空", 500);
         }
-        $this->forge = new Api($url);
-        $this->token = Auth::getInstance()->Token();
+        $this->url = $url;
+        $this->token = (new Auth($url))->Token();
+        $this->client = new \GuzzleHttp\Client();
     }
 
     //模型合并
@@ -26,14 +28,35 @@ class Merge
                 "objectName" => $outobjectname
             ]
         ];
-
-        return $this->forge->PostJson($data, 'job/v1/author-merger', $this->token);
+        $res = $this->client->request('POST', $this->url . '/job/v1/author-merger',
+            [
+                'json' => $data,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->token,
+                    "Content-Type" => "application/json",
+                    'x-ads-force' => true
+                ]
+            ]
+        );
+        $data = $res->getBody()->getContents();
+        return json_decode($data);
     }
 
 
     //合并进度
     public function progress($urn)
     {
-        return $this->forge->Get("job/v1/author-merger/" . $urn, $this->token);
+        $res = $this->client->request('GET', $this->url . "/job/v1/author-merger/" . $urn,
+            [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->token,
+                    "Content-Type" => "application/json"
+                ]
+            ]
+        );
+
+        $data = $res->getBody();
+        return json_decode($data);
+
     }
 }

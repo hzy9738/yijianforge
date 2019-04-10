@@ -8,9 +8,9 @@ class Auth
 
     private $token;
 
-    public function __construct($url = null)
+    public function __construct($url = "")
     {
-        if ($url === "" && empty($url)) {
+        if ($url === "") {
             throw new \Exception("URL不能为空", 500);
         }
         $data = [
@@ -50,7 +50,7 @@ class Auth
 
     public function Token()
     {
-        return $this->token;
+        return $this->token->access_token;
     }
 
     //$hi = Auth::getInstance();
