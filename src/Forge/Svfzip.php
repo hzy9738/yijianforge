@@ -11,7 +11,7 @@ class Svfzip
 
     private function __construct($url = null)
     {
-        if(empty($url)){
+        if ($url === "" && empty($url)) {
             throw new \Exception("URL不能为空", 500);
         }
         $this->forge = new Api($url);

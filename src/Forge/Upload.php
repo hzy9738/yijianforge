@@ -12,7 +12,7 @@ class Upload
 
     public function __construct($url = null)
     {
-        if(empty($url)){
+        if ($url === "" && empty($url)) {
             throw new \Exception("URL不能为空", 500);
         }
         $this->url = $url;
