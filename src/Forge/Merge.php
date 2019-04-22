@@ -19,13 +19,14 @@ class Merge
     }
 
     //模型合并
-    public function Model($input, $outobjectname)
+    public function Model($input, $outobjectname, $bucket = "lvp", $isModelsDb = true)
     {
         $data = [
             "input" => $input,
             "output" => [
                 "bucketKey" => "lvp",
-                "objectName" => $outobjectname
+                "objectName" => $outobjectname,
+                "createPropDb" => $isModelsDb
             ]
         ];
         $res = $this->client->request('POST', $this->url . '/job/v1/author-merger',

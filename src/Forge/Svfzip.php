@@ -20,7 +20,28 @@ class Svfzip
 
     }
 
-
+    //转化成.svfzip
+    public function iCloud($urn, $filename)
+    {
+        $data = [
+            "input" => [
+                "urn" => base64_encode($urn),
+                "compressedUrn" => false,
+                "rootFilename" => $filename
+            ],
+            "output" => [
+                "formats" => [
+                    [
+                        "type" => "svf",
+                        "views" => [
+                            "2d",
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        return $this->forge->PostJson($data, 'modelderivative/v2/designdata/job', $this->token);
+    }
 
     /**
      * rvt模型 转化成.svfzip
