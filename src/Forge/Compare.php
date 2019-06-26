@@ -20,26 +20,24 @@ class Compare
     }
 
     //模型对比
-    public function Model($newobjectName, $oldobjectName, $outobjectname, $bucket = "lvp", $isModelsDb = true)
+    public function Model($newobjectName, $oldobjectName, $outobjectname)
     {
-
         $data = [
             "input" => [
                 "a" => [
-                    "bucketKey" => $bucket,
+                    "bucketKey" => "lvp",
                     "objectName" => $newobjectName,
                     "isSvfzip" => false
                 ],
                 "b" => [
-                    "bucketKey" => $bucket,
+                    "bucketKey" => "lvp",
                     "objectName" => $oldobjectName,
                     "isSvfzip" => false
                 ]
             ],
             "output" => [
-                "bucketKey" => $bucket,
-                "objectName" => $outobjectname,
-                "createPropDb" => $isModelsDb
+                "bucketKey" => "lvp",
+                "objectName" => $outobjectname
             ]
         ];
         $res = $this->client->request('POST', $this->url . '/job/v1/author-differ',
