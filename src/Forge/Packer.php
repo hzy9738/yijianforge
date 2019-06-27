@@ -2,11 +2,12 @@
 
 namespace Forge;
 
-class Merge
+
+class Packer
 {
     private $token = null;
-    private $client = null;
     private $url = null;
+    private $client = null;
 
     public function __construct($url = "")
     {
@@ -16,20 +17,24 @@ class Merge
         $this->url = $url;
         $this->token = (new Auth($url))->Token();
         $this->client = new \GuzzleHttp\Client();
+
     }
 
-    //模型合并
-    public function Model($input, $outobjectname, $bucket = "lvp", $isModelsDb = true)
+
+    //packer 打包成svfzip
+    public function SvfZip($objectName, $outputName, $bucket = "lvp")
     {
         $data = [
-            "input" => $input,
+            "input" => [
+                "bucketKey" => $bucket,
+                "objectName" => $objectName,
+            ],
             "output" => [
-                "bucketKey" => "lvp",
-                "objectName" => $outobjectname,
-                "createPropDb" => $isModelsDb
+                "bucketKey" => $bucket,
+                "objectName" => $outputName,
             ]
         ];
-        $res = $this->client->request('POST', $this->url . '/job/v1/author-merger',
+        $res = $this->client->request('POST', $this->url . '/job/v1/toolkit-packer',
             [
                 'json' => $data,
                 'headers' => [
@@ -39,15 +44,17 @@ class Merge
                 ]
             ]
         );
+
         $data = $res->getBody()->getContents();
         return json_decode($data);
     }
 
 
-    //合并进度
-    public function progress($urn)
+    //打包进度
+    public function progress($objectId)
     {
-        $res = $this->client->request('GET', $this->url . "/job/v1/author-merger/" . $urn,
+
+        $res = $this->client->request('GET', $this->url . "/job/v1/toolkit-packer/" . $objectId,
             [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $this->token,
@@ -57,7 +64,9 @@ class Merge
         );
 
         $data = $res->getBody();
+
         return json_decode($data);
 
     }
+
 }

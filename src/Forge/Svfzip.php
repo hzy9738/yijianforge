@@ -52,18 +52,8 @@ class Svfzip
      * @param $isModelsDb 是否有sdb
      * @return mixed
      */
-    public function Model($objectId, $filename, $isGrid = true, $isRoom = true, $isModelsDb = true)
+    public function Model($objectId, $filename, $options = [])
     {
-        $features = ["ExcludeTexture", "UseViewOverrideGraphic"];
-        if ($isGrid) {
-            array_push($features, "ExportGrids");
-        }
-        if ($isRoom) {
-            array_push($features, "ExportRooms");
-        }
-        if ($isModelsDb) {
-            array_push($features, "GenerateModelsDb");
-        }
         $data = [
             "input" => [
                 "urn" => base64_encode($objectId),
@@ -74,7 +64,7 @@ class Svfzip
                 "formats" => [
                     [
                         "type" => "svf",
-                        "features" => $features,
+                        "features" => $options,
                         "views" => [
 
                         ]
@@ -82,8 +72,6 @@ class Svfzip
                 ]
             ]
         ];
-
-
         $res = $this->client->request('POST', $this->url . '/modelderivative/v2/designdata/job',
             [
                 'json' => $data,
