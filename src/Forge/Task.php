@@ -18,17 +18,19 @@ class Task
     }
 
 
-    public function Summit($origin, $type, $objectKey, $path, $exportRooms = null, $exportGrids = null, $renderColor = null, $thumbnail = null, $project_id = null)
+    public function Summit($origin, $type, $objectKey, $path, $foreignKey = null, $project_id = null, $exportRooms = null, $exportGrids = null, $renderColor = null, $thumbnail = null)
     {
         $data['origin'] = $origin;
         $data['type'] = $type;
         $data['objectKey'] = $objectKey;
+        $data['foreignKey'] = $foreignKey;
         $data['path'] = $path;
         $data['project_id'] = $project_id;
         $data['exportRooms'] = $exportRooms;
         $data['exportGrids'] = $exportGrids;
         $data['renderColor'] = $renderColor;
         $data['thumbnail'] = $thumbnail;
+
         $res = $this->client->request('POST', $this->url . '/forgeapi/public/api/task',
             [
                 'json' => $data,
@@ -40,6 +42,27 @@ class Task
         );
 
         $data = $res->getBody()->getContents();
+
+        return json_decode($data);
+    }
+
+    public function Get($origin, $type, $objectKey)
+    {
+        $data['origin'] = $origin;
+        $data['type'] = $type;
+        $data['objectKey'] = $objectKey;
+        $res = $this->client->request('POST', $this->url . '/forgeapi/public/api/svfpath',
+            [
+                'json' => $data,
+                'headers' => [
+                    "Content-Type" => "application/json",
+                    'x-ads-force' => true
+                ]
+            ]
+        );
+
+        $data = $res->getBody()->getContents();
+
         return json_decode($data);
     }
 
