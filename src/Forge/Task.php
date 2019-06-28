@@ -29,7 +29,7 @@ class Task
         $data['exportGrids'] = $exportGrids;
         $data['renderColor'] = $renderColor;
         $data['thumbnail'] = $thumbnail;
-        $res = $this->client->request('POST', $this->url . '/api/task',
+        $res = $this->client->request('POST', $this->url . '/forgeapi/public/api/task',
             [
                 'json' => $data,
                 'headers' => [
