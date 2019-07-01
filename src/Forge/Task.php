@@ -36,7 +36,6 @@ class Task
                 'json' => $data,
                 'headers' => [
                     "Content-Type" => "application/json",
-                    'x-ads-force' => true
                 ]
             ]
         );
@@ -56,7 +55,6 @@ class Task
                 'json' => $data,
                 'headers' => [
                     "Content-Type" => "application/json",
-                    'x-ads-force' => true
                 ]
             ]
         );
