@@ -18,7 +18,7 @@ class Task
     }
 
 
-    public function Summit($origin, $type, $objectKey, $path, $foreignKey = null, $project_id = null, $exportRooms = null, $exportGrids = null, $renderColor = null, $thumbnail = null)
+    public function Summit($origin, $type, $objectKey, $path, $foreignKey = null, $project_id = null, $objectKeyArray = [], $exportRooms = null, $exportGrids = null, $renderColor = null, $thumbnail = null)
     {
         $data['origin'] = $origin;
         $data['type'] = $type;
@@ -26,6 +26,7 @@ class Task
         $data['foreignKey'] = $foreignKey;
         $data['path'] = $path;
         $data['project_id'] = $project_id;
+        $data['objectKeyArray'] = $objectKeyArray;
         $data['exportRooms'] = $exportRooms;
         $data['exportGrids'] = $exportGrids;
         $data['renderColor'] = $renderColor;
