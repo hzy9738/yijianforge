@@ -23,10 +23,10 @@ class Task
         $data['origin'] = $origin;
         $data['type'] = $type;
         $data['objectKey'] = $objectKey;
+        $data['objectKeyArray'] = $objectKeyArray;
         $data['foreignKey'] = $foreignKey;
         $data['path'] = $path;
         $data['project_id'] = $project_id;
-        $data['objectKeyArray'] = $objectKeyArray;
         $data['exportRooms'] = $exportRooms;
         $data['exportGrids'] = $exportGrids;
         $data['renderColor'] = $renderColor;
