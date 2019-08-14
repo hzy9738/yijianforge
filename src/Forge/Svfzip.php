@@ -88,7 +88,7 @@ class Svfzip
     }
 
     //图纸转化成.svfzip
-    public function Draw($urn, $filename)
+    public function Draw($urn, $filename, $options = [])
     {
         $data = [
             "input" => [
@@ -100,6 +100,7 @@ class Svfzip
                 "formats" => [
                     [
                         "type" => "svf",
+                        "features" => $options,
                         "views" => [
                             "2d",
 //                            "3d"
