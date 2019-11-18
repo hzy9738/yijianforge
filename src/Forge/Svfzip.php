@@ -52,7 +52,7 @@ class Svfzip
      * @param $isModelsDb 是否有sdb
      * @return mixed
      */
-    public function Model($objectId, $filename, $isGrid = true, $isRoom = true, $isModelsDb = true)
+    public function Model($objectId, $filename, $isGrid = true, $isRoom = true, $isModelsDb = true, $levelOfDetail = 0)
     {
         $features = ["ExcludeTexture", "UseViewOverrideGraphic"];
         if ($isGrid) {
@@ -75,6 +75,7 @@ class Svfzip
                     [
                         "type" => "svf",
                         "features" => $features,
+                        "levelOfDetail" => $levelOfDetail,
                         "views" => [
 
                         ]
