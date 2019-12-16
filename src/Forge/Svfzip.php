@@ -47,23 +47,10 @@ class Svfzip
      * rvt模型 转化成.svfzip
      * @param $objectId  urn
      * @param $filename 文件路径
-     * @param $isGrid   是否有轴网
-     * @param $isRoom   是否有房间
-     * @param $isModelsDb 是否有sdb
-     * @return mixed
+     * @param $options 参数
      */
-    public function Model($objectId, $filename, $isGrid = true, $isRoom = true, $isModelsDb = true, $levelOfDetail = 0)
+    public function Model($objectId, $filename, $options = [])
     {
-        $features = ["ExcludeTexture", "UseViewOverrideGraphic"];
-        if ($isGrid) {
-            array_push($features, "ExportGrids");
-        }
-        if ($isRoom) {
-            array_push($features, "ExportRooms");
-        }
-        if ($isModelsDb) {
-            array_push($features, "GenerateModelsDb");
-        }
         $data = [
             "input" => [
                 "urn" => base64_encode($objectId),
@@ -74,17 +61,13 @@ class Svfzip
                 "formats" => [
                     [
                         "type" => "svf",
-                        "features" => $features,
-                        "levelOfDetail" => $levelOfDetail,
+                        "features" => $options,
                         "views" => [
-
                         ]
                     ]
                 ]
             ]
         ];
-
-
         $res = $this->client->request('POST', $this->url . '/modelderivative/v2/designdata/job',
             [
                 'json' => $data,
@@ -95,7 +78,6 @@ class Svfzip
                 ]
             ]
         );
-
         $data = $res->getBody()->getContents();
         return json_decode($data);
     }
